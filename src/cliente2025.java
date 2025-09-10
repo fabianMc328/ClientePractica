@@ -39,23 +39,40 @@ public class cliente2025 {
         String respuesta = lector.readLine();
         System.out.println("Servidor dice: " + respuesta);
 
-        // NUEVO: Mostrar menú de usuarios si login fue exitoso
         if (respuesta.startsWith("✅ Bienvenido")) {
             String menu = lector.readLine();
 
-            if ("MENU_USUARIOS".equals(menu)) {
-                System.out.println("\n--- MENÚ USUARIOS ---");
+            if ("MENU_OPCIONES".equals(menu)) {
+                System.out.println("\n--- MENÚ ---");
                 System.out.println("1. Mostrar usuarios registrados");
+                System.out.println("2. Jugar un juego");
                 System.out.print("Elige una opción: ");
                 String accion = scanner.nextLine();
                 escritor.println(accion);
 
-                if ("1".equals(accion)) {
-                    System.out.println("Usuarios registrados:");
-                    String linea;
-                    while (!(linea = lector.readLine()).equals("FIN_LISTA")) {
-                        System.out.println("- " + linea);
-                    }
+                switch (accion) {
+                    case "1":
+                        System.out.println("\nUsuarios registrados:");
+                        String linea;
+                        while (!(linea = lector.readLine()).equals("FIN_LISTA")) {
+                            System.out.println("- " + linea);
+                        }
+                        break;
+                    case "2":
+                        System.out.println("\n🎮 Comienza el juego:");
+                        while (true) {
+                            String mensaje = lector.readLine();
+                            System.out.println(mensaje);
+                            if (mensaje.startsWith("🎉") || mensaje.startsWith("😢")) {
+                                break;
+                            }
+                            System.out.print("Tu intento: ");
+                            String intento = scanner.nextLine();
+                            escritor.println(intento);
+                        }
+                        break;
+                    default:
+                        System.out.println("❌ Opción no válida.");
                 }
             }
         }
@@ -64,3 +81,4 @@ public class cliente2025 {
         salida.close();
     }
 }
+
