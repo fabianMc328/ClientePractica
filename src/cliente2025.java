@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -52,27 +49,38 @@ public class cliente2025 {
 
                 switch (accion) {
                     case "1":
-                        System.out.println("\nUsuarios registrados:");
+                        System.out.println("Usuarios registrados:");
                         String linea;
                         while (!(linea = lector.readLine()).equals("FIN_LISTA")) {
                             System.out.println("- " + linea);
                         }
                         break;
                     case "2":
-                        System.out.println("\n🎮 Comienza el juego:");
+                        System.out.println(" Comienza el juego:");
                         while (true) {
                             String mensaje = lector.readLine();
-                            System.out.println(mensaje);
-                            if (mensaje.startsWith("🎉") || mensaje.startsWith("😢")) {
+
+                            if (mensaje == null) {
+                                System.out.println(" Conexión cerrada inesperadamente.");
                                 break;
                             }
+
+                            System.out.println(mensaje);
+
+                            if (mensaje.equals("FIN_JUEGO") ||
+                                    mensaje.startsWith("🎉") ||
+                                    mensaje.startsWith("😢") ||
+                                    mensaje.startsWith("Se acabaron")) {
+                                break;
+                            }
+
                             System.out.print("Tu intento: ");
                             String intento = scanner.nextLine();
                             escritor.println(intento);
                         }
                         break;
                     default:
-                        System.out.println("❌ Opción no válida.");
+                        System.out.println("Opción no válida.");
                 }
             }
         }
@@ -81,4 +89,5 @@ public class cliente2025 {
         salida.close();
     }
 }
+
 
