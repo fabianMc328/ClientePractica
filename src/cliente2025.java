@@ -31,10 +31,22 @@ public class cliente2025 {
                 escritor.println(opcion);
                 System.out.print("Nuevo usuario: ");
                 String usuario = scanner.nextLine();
-                System.out.print("Nueva contraseña: ");
-                String contrasena = scanner.nextLine();
+                String contraseña;
+                do{
+                    System.out.print("Nueva contraseña: ");
+                    contraseña = scanner.nextLine();
+
+                    if (contraseña.length() < 4) {
+                        System.out.println("la contraseña debe tener minimo 4 caracteres");
+                        System.out.print("Nueva contraseña: ");
+                    }
+
+                }while(contraseña.length() < 4);
+
+
+
                 escritor.println(usuario);
-                escritor.println(contrasena);
+                escritor.println(contraseña);
 
                 String respuesta = lector.readLine();
                 System.out.println("Servidor dice: " + respuesta);
@@ -55,9 +67,9 @@ public class cliente2025 {
                     System.out.print("Usuario: ");
                     String usuario = scanner.nextLine();
                     System.out.print("Contraseña: ");
-                    String contrasena = scanner.nextLine();
+                    String contraseña = scanner.nextLine();
                     escritor.println(usuario);
-                    escritor.println(contrasena);
+                    escritor.println(contraseña);
 
                     String respuesta = lector.readLine();
 
