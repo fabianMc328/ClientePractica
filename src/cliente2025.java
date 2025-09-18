@@ -163,19 +163,34 @@ public class cliente2025 {
                                     System.out.println("1. Mensajes recibidos");
                                     System.out.println("2. Mensajes enviados");
                                     System.out.print("Elige una opción: ");
-                                    String tipo = scanner.nextLine();
-                                    escritor.println(tipo);
+                                    String tipoInput = scanner.nextLine(); // nuevo
+                                    String tipo = ""; // nuevo
 
-
-                                    System.out.println("Tus mensajes:");
-                                    int contador = 1;
-                                    while (!(linea = lector.readLine()).equals("FIN_MENSAJES")) {
-                                        System.out.println(contador + ". " + linea);
-                                        contador++;
+                                    if ("1".equals(tipoInput)) { // nuevo
+                                        tipo = "recibido"; // nuevo
+                                    } else if ("2".equals(tipoInput)) { // nuevo
+                                        tipo = "enviado"; // nuevo
+                                    } else { // nuevo
+                                        System.out.println("Opción no válida para tipo de mensajes."); // nuevo
+                                        break; // nuevo: salir del case 4 y volver al menú
                                     }
 
-                                    if (contador == 1) {
-                                        System.out.println("No tienes mensajes para eliminar.");
+                                    escritor.println(tipo); // nuevo
+
+                                    // Ahora leer la lista de mensajes enviados por el servidor
+                                    System.out.println("Tus mensajes:");
+                                    String lineaa;
+                                    int contador = 0; // nuevo
+                                    while ( (lineaa = lector.readLine()) != null ) { // nuevo
+                                        if (lineaa.equals("FIN_LISTA")) { // nuevo
+                                            break; // nuevo
+                                        }
+                                        System.out.println((contador+1) + ". " + lineaa); // nuevo
+                                        contador++; // nuevo
+                                    }
+
+                                    if (contador == 0) { // nuevo
+                                        System.out.println("No tienes mensajes " + tipo + " para eliminar."); // nuevo
                                         break;
                                     }
 
@@ -186,8 +201,6 @@ public class cliente2025 {
                                     String respuestaEliminar = lector.readLine();
                                     System.out.println(respuestaEliminar);
                                     break;
-
-
 
                                 case "5":
                                     sesionActiva = false;
