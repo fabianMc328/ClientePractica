@@ -114,7 +114,8 @@ public class cliente2025 {
                             System.out.println("1. Mostrar usuarios registrados");
                             System.out.println("2. Jugar un juego");
                             System.out.println("3. Enviar mensaje");
-                            System.out.println("4. Salir");
+                            System.out.println("4. Eliminar mensaje");
+                            System.out.println("5. Salir");
                             System.out.print("Elige una opción: ");
                             String accion = scanner.nextLine();
                             escritor.println(accion);
@@ -158,6 +159,37 @@ public class cliente2025 {
                                     System.out.println(confirmacion);
                                     break;
                                 case "4":
+                                    System.out.println("¿Quieres eliminar un mensaje recibido o enviado?");
+                                    System.out.println("1. Mensajes recibidos");
+                                    System.out.println("2. Mensajes enviados");
+                                    System.out.print("Elige una opción: ");
+                                    String tipo = scanner.nextLine();
+                                    escritor.println(tipo);
+
+
+                                    System.out.println("Tus mensajes:");
+                                    int contador = 1;
+                                    while (!(linea = lector.readLine()).equals("FIN_MENSAJES")) {
+                                        System.out.println(contador + ". " + linea);
+                                        contador++;
+                                    }
+
+                                    if (contador == 1) {
+                                        System.out.println("No tienes mensajes para eliminar.");
+                                        break;
+                                    }
+
+                                    System.out.print("Elige el número del mensaje a eliminar: ");
+                                    String numEliminar = scanner.nextLine();
+                                    escritor.println(numEliminar);
+
+                                    String respuestaEliminar = lector.readLine();
+                                    System.out.println(respuestaEliminar);
+                                    break;
+
+
+
+                                case "5":
                                     sesionActiva = false;
                                     break;
                                 default:
