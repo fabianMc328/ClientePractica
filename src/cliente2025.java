@@ -35,15 +35,10 @@ public class cliente2025 {
                 do{
                     System.out.print("Nueva contraseña: ");
                     contraseña = scanner.nextLine();
-
                     if (contraseña.length() < 4) {
                         System.out.println("la contraseña debe tener minimo 4 caracteres");
-                        System.out.print("Nueva contraseña: ");
                     }
-
                 }while(contraseña.length() < 4);
-
-
 
                 escritor.println(usuario);
                 escritor.println(contraseña);
@@ -153,6 +148,11 @@ public class cliente2025 {
                                     System.out.print("Destinatario: ");
                                     String destinatario = scanner.nextLine();
                                     escritor.println(destinatario);
+                                    String respuestaDestinatario = lector.readLine();
+                                    if ("NO_EXISTE".equals(respuestaDestinatario)) {
+                                        System.out.println("Usuario no registrado, no se puede enviar mensajes.");
+                                        break;
+                                    }
                                     System.out.print("Mensaje: ");
                                     String mensaje = scanner.nextLine();
                                     escritor.println(mensaje);
@@ -160,7 +160,6 @@ public class cliente2025 {
                                     System.out.println(confirmacion);
                                     break;
                                 case "4":
-
                                     System.out.println("¿Quieres eliminar un mensaje recibido o enviado?");
                                     System.out.println("1. Mensajes recibidos");
                                     System.out.println("2. Mensajes enviados");
@@ -179,20 +178,17 @@ public class cliente2025 {
 
                                     escritor.println(tipo);
 
-
-                                    System.out.println("Tus mensajes:");
-                                    int contador = 0;
-                                    while ((linea = lector.readLine()) != null) {
-                                        if (linea.equals("FIN_LISTA")) {
-                                            break;
-                                        }
-                                        contador++;
-                                        System.out.println(linea);
-                                    }
-
-                                    if (contador == 0) {
+                                    String mensajeServidor = lector.readLine();
+                                    if ("NO_HAY_MENSAJES".equals(mensajeServidor)) {
                                         System.out.println("No tienes mensajes " + tipo + " para eliminar.");
                                         break;
+                                    }
+
+                                    System.out.println("Tus mensajes:");
+                                    System.out.println(mensajeServidor);
+
+                                    while (!(linea = lector.readLine()).equals("FIN_LISTA")) {
+                                        System.out.println(linea);
                                     }
 
                                     System.out.print("Elige el número del mensaje a eliminar: ");
@@ -203,8 +199,13 @@ public class cliente2025 {
                                     System.out.println(respuestaEliminar);
                                     break;
                                 case "5":
-                                    while ((linea = lector.readLine()) != null) {
-                                        if (linea.startsWith("=== Fin")) break;
+                                    String mensajeLeer = lector.readLine();
+                                    if ("NO_HAY_MENSAJES".equals(mensajeLeer)) {
+                                        System.out.println("No tienes mensajes recibidos.");
+                                        break;
+                                    }
+                                    System.out.println(mensajeLeer);
+                                    while (!(linea = lector.readLine()).equals("FIN_LISTA")) {
                                         System.out.println(linea);
                                     }
                                     break;
@@ -230,6 +231,7 @@ public class cliente2025 {
         scanner.close();
     }
 }
+
 
 
 
