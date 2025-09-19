@@ -115,7 +115,8 @@ public class cliente2025 {
                             System.out.println("2. Jugar un juego");
                             System.out.println("3. Enviar mensaje");
                             System.out.println("4. Eliminar mensaje");
-                            System.out.println("5. Salir");
+                            System.out.println("5. Leer mensajes");
+                            System.out.println("6. Salir");
                             System.out.print("Elige una opción: ");
                             String accion = scanner.nextLine();
                             escritor.println(accion);
@@ -201,8 +202,13 @@ public class cliente2025 {
                                     String respuestaEliminar = lector.readLine();
                                     System.out.println(respuestaEliminar);
                                     break;
-
                                 case "5":
+                                    while ((linea = lector.readLine()) != null) {
+                                        if (linea.startsWith("=== Fin")) break;
+                                        System.out.println(linea);
+                                    }
+                                    break;
+                                case "6":
                                     sesionActiva = false;
                                     break;
                                 default:
