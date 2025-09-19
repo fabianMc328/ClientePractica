@@ -159,38 +159,38 @@ public class cliente2025 {
                                     System.out.println(confirmacion);
                                     break;
                                 case "4":
+
                                     System.out.println("¿Quieres eliminar un mensaje recibido o enviado?");
                                     System.out.println("1. Mensajes recibidos");
                                     System.out.println("2. Mensajes enviados");
                                     System.out.print("Elige una opción: ");
-                                    String tipoInput = scanner.nextLine(); // nuevo
-                                    String tipo = ""; // nuevo
+                                    String tipoInput = scanner.nextLine();
+                                    String tipo = "";
 
-                                    if ("1".equals(tipoInput)) { // nuevo
-                                        tipo = "recibido"; // nuevo
-                                    } else if ("2".equals(tipoInput)) { // nuevo
-                                        tipo = "enviado"; // nuevo
-                                    } else { // nuevo
-                                        System.out.println("Opción no válida para tipo de mensajes."); // nuevo
-                                        break; // nuevo: salir del case 4 y volver al menú
+                                    if ("1".equals(tipoInput)) {
+                                        tipo = "recibido";
+                                    } else if ("2".equals(tipoInput)) {
+                                        tipo = "enviado";
+                                    } else {
+                                        System.out.println("Opción no válida para tipo de mensajes.");
+                                        break;
                                     }
 
-                                    escritor.println(tipo); // nuevo
+                                    escritor.println(tipo);
 
-                                    // Ahora leer la lista de mensajes enviados por el servidor
+
                                     System.out.println("Tus mensajes:");
-                                    String lineaa;
-                                    int contador = 0; // nuevo
-                                    while ( (lineaa = lector.readLine()) != null ) { // nuevo
-                                        if (lineaa.equals("FIN_LISTA")) { // nuevo
-                                            break; // nuevo
+                                    int contador = 0;
+                                    while ((linea = lector.readLine()) != null) {
+                                        if (linea.equals("FIN_LISTA")) {
+                                            break;
                                         }
-                                        System.out.println((contador+1) + ". " + lineaa); // nuevo
-                                        contador++; // nuevo
+                                        contador++;
+                                        System.out.println(linea);
                                     }
 
-                                    if (contador == 0) { // nuevo
-                                        System.out.println("No tienes mensajes " + tipo + " para eliminar."); // nuevo
+                                    if (contador == 0) {
+                                        System.out.println("No tienes mensajes " + tipo + " para eliminar.");
                                         break;
                                     }
 
