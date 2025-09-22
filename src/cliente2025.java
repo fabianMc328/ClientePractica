@@ -189,14 +189,34 @@ public class cliente2025 {
                                 break;
 
                             case "5":
-                                String mensajeLeer = lector.readLine();
-                                if ("NO_HAY_MENSAJES".equals(mensajeLeer)) {
+                                String mensajeInicio = lector.readLine();
+                                if ("NO_HAY_MENSAJES".equals(mensajeInicio)) {
                                     System.out.println("No tienes mensajes recibidos.");
                                     break;
                                 }
-                                System.out.println(mensajeLeer);
-                                while (!(linea = lector.readLine()).equals("FIN_LISTA")) {
-                                    System.out.println(linea);
+
+                                boolean leyendo = true;
+                                while (leyendo) {
+                                    String lineaMensaje = lector.readLine();
+
+                                    if ("FIN_LISTA".equals(lineaMensaje)) {
+                                        leyendo = false;
+                                        break;
+                                    }
+
+                                    System.out.println(lineaMensaje);
+
+                                    if ("MAS_PAGINAS".equals(lineaMensaje)) {
+                                        String pregunta = lector.readLine();
+                                        System.out.print(pregunta + " ");
+                                        String respuestaa = scanner.nextLine();
+                                        escritor.println(respuestaa);
+
+                                        if (!respuestaa.equalsIgnoreCase("siguiente")) {
+                                            leyendo = false;
+                                        }
+                                    }
+
                                 }
                                 break;
 
