@@ -123,18 +123,21 @@ public class cliente2025 {
                                 break;
 
                             case "2":
+                                System.out.println(lector.readLine());
+
                                 while (true) {
-                                    String mensajeJuego = lector.readLine();
-                                    if (mensajeJuego == null) {
-                                        System.out.println("Conexión cerrada inesperadamente.");
-                                        sesionActiva = false;
-                                        break;
-                                    }
-                                    if ("FIN_JUEGO".equals(mensajeJuego)) break;
-                                    System.out.println(mensajeJuego);
                                     System.out.print("Tu intento: ");
                                     String intento = scanner.nextLine();
                                     escritor.println(intento);
+
+                                    String respuestaServidor = lector.readLine();
+                                    System.out.println(respuestaServidor);
+
+
+                                    if (respuestaServidor.contains("🎉") || respuestaServidor.contains("😢")) {
+                                        lector.readLine();
+                                        break;
+                                    }
                                 }
                                 break;
 
@@ -260,6 +263,7 @@ public class cliente2025 {
         scanner.close();
     }
 }
+
 
 
 
