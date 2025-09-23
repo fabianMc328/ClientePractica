@@ -110,6 +110,7 @@ public class cliente2025 {
                         System.out.println("4. Eliminar mensaje");
                         System.out.println("5. Leer mensajes");
                         System.out.println("6. Salir");
+                        System.out.println("7. Eliminar mi cuenta ");
                         System.out.print("Elige una opción: ");
                         String accion = scanner.nextLine();
                         escritor.println(accion);
@@ -217,6 +218,24 @@ public class cliente2025 {
                                         }
                                     }
 
+                                }
+                                break;
+                            case "7":
+                                System.out.print("¿Estás seguro de eliminar tu cuenta? (si/no): ");
+                                String confirmar = scanner.nextLine().trim().toLowerCase();
+                                if (confirmar.equals("si")) {
+                                    escritor.println(confirmar);
+                                    String respuestaServidor = lector.readLine();
+                                    if ("ELIMINADO_OK".equals(respuestaServidor)) {
+                                        System.out.println("✅ Tu cuenta fue eliminada. Regresando al menú principal...");
+                                        sesionActiva = false;
+                                    } else if ("ELIMINADO_ERROR".equals(respuestaServidor)) {
+                                        System.out.println(" Error al eliminar tu cuenta.");
+                                    }
+                                } else {
+                                    escritor.println(confirmar);
+                                    lector.readLine();
+                                    System.out.println("Operación cancelada. Volviendo al menú cliente.");
                                 }
                                 break;
 
