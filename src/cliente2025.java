@@ -248,6 +248,7 @@ public class cliente2025 {
 
                             default:
                                 System.out.println("Opción no válida.");
+                                lector.readLine();
                         }
                     }
 
@@ -257,6 +258,7 @@ public class cliente2025 {
 
             } else {
                 System.out.println("Opción no válida.");
+
             }
         }
 
