@@ -67,22 +67,27 @@ public class cliente2025 {
 
                     if ("LOGIN_ERROR".equals(respuesta)) {
                         System.out.println("Usuario o contraseña incorrectos.");
+                        boolean volverAlMenu = false;
                         boolean volverIntentar = true;
                         while (volverIntentar) {
                             System.out.println("1. Volver a intentar login");
-                            System.out.println("2. Salir");
+                            System.out.println("2. Regresar");
                             System.out.print("Elige una opción: ");
                             String subopcion = scanner.nextLine();
                             if ("1".equals(subopcion)) {
                                 volverIntentar = false;
                             } else if ("2".equals(subopcion)) {
+                                volverAlMenu = true;
                                 volverIntentar = false;
-                                salir = true;
+
                             } else {
                                 System.out.println("Opción no válida.");
                             }
                         }
                         salida.close();
+                        if (volverAlMenu) {
+                            break;
+                        }
                         continue;
                     }
 
@@ -164,11 +169,15 @@ public class cliente2025 {
                                 System.out.println("2. Mensajes enviados");
                                 System.out.print("Elige una opción: ");
                                 String tipoInput = scanner.nextLine();
-                                String tipo = tipoInput.equals("1") ? "recibido" :
-                                        tipoInput.equals("2") ? "enviado" : "";
+                                String tipo;
 
-                                if (tipo.isEmpty()) {
+                                if (tipoInput.equals("1")) {
+                                    tipo = "recibido";
+                                } else if (tipoInput.equals("2")) {
+                                    tipo = "enviado";
+                                } else {
                                     System.out.println("Opción no válida para tipo de mensajes.");
+                                    lector.readLine();
                                     break;
                                 }
 
