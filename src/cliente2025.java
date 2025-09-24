@@ -116,6 +116,8 @@ public class cliente2025 {
                         System.out.println("5. Leer mensajes");
                         System.out.println("6. Salir");
                         System.out.println("7. Eliminar mi cuenta ");
+                        System.out.println("8. Bloquear usuario");
+                        System.out.println("9. Desbloquear usuario");
                         System.out.print("Elige una opción: ");
                         String accion = scanner.nextLine();
                         escritor.println(accion);
@@ -251,10 +253,23 @@ public class cliente2025 {
                                 }
                                 break;
 
+
                             case "6":
                                 sesionActiva = false;
                                 break;
+                            case "8":
+                                System.out.print("Ingrese el usuario que desea bloquear: ");
+                                String bloquear = scanner.nextLine();
+                                escritor.println(bloquear);
+                                System.out.println(lector.readLine());
+                                break;
 
+                            case "9":
+                                System.out.print("Ingrese el usuario que desea desbloquear: ");
+                                String desbloquear = scanner.nextLine();
+                                escritor.println(desbloquear);
+                                System.out.println(lector.readLine());
+                                break;
                             default:
                                 System.out.println("Opción no válida.");
                                 lector.readLine();
