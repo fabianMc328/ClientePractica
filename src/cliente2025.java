@@ -115,6 +115,7 @@ public class cliente2025 {
                         System.out.println("9. Desbloquear usuario");
                         System.out.println("10. Solicitar ver archivos de otro usuario");
                         System.out.println("11. Leer solicitudes de archivos");
+                        System.out.println("12. Ver archivos compartidos");
                         System.out.print("Elige una opción: ");
                         String accion = scanner.nextLine();
                         escritor.println(accion);
@@ -255,12 +256,34 @@ public class cliente2025 {
                             case "11":
                                 String respSolicitud;
                                 while (!(respSolicitud = lector.readLine()).equals("FIN_SOLICITUDES")) {
-                                    System.out.println(respSolicitud);
-                                    String decision = scanner.nextLine();
-                                    escritor.println(decision);
-                                    System.out.println(lector.readLine());
+                                    if (respSolicitud.equals("SOLICITUD_ARCHIVOS")) {
+                                        String usuarioSolicitante = lector.readLine();
+                                        System.out.println("El usuario '" + usuarioSolicitante + "' quiere ver tus archivos. ¿Deseas compartirlos? (si/no)");
+                                        String decision = scanner.nextLine();
+                                        escritor.println(decision);
+
+                                        if ("si".equalsIgnoreCase(decision)) {
+                                            String sig = lector.readLine(); // ARCHIVOS_COMPARTIDOS
+                                            System.out.println(sig);
+                                        } else {
+                                            System.out.println(lector.readLine()); // NO_COMPARTIDOS
+                                        }
+                                    }
                                 }
                                 break;
+
+                            case "12":
+                                escritor.println("12");
+                                String respArchivos;
+                                while (!(respArchivos = lector.readLine()).equals("FIN_LISTA_ARCHIVOS")) {
+                                    if ("NO_HAY_ARCHIVOS".equals(respArchivos)) {
+                                        System.out.println("No hay archivos compartidos pendientes.");
+                                        break;
+                                    }
+                                    System.out.println(respArchivos);
+                                }
+                                break;
+
 
                             default:
                                 System.out.println("Opción no válida.");
