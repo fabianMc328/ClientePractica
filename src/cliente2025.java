@@ -136,7 +136,7 @@ public class cliente2025 {
                                     String respServidor = lector.readLine();
                                     System.out.println(respServidor);
                                     if (respServidor.contains("🎉") || respServidor.contains("😢")) {
-                                        lector.readLine(); // FIN_JUEGO
+                                        lector.readLine();
                                         break;
                                     }
                                 }
@@ -263,14 +263,27 @@ public class cliente2025 {
                                         escritor.println(decision);
 
                                         if ("si".equalsIgnoreCase(decision)) {
-                                            String sig = lector.readLine(); // ARCHIVOS_COMPARTIDOS
-                                            System.out.println(sig);
+                                            String mensajeServidor = lector.readLine();
+                                            if ("PEDIR_LISTA_ARCHIVOS".equals(mensajeServidor)) {
+                                                File directorio = new File(".");
+                                                File[] archivos = directorio.listFiles();
+                                                if (archivos != null) {
+                                                    for (File f : archivos) {
+                                                        if (f.isFile()) {
+                                                            escritor.println(f.getName());
+                                                        }
+                                                    }
+                                                }
+                                                escritor.println("FIN_LISTA_ARCHIVOS");
+                                            }
+                                            System.out.println(lector.readLine());
                                         } else {
-                                            System.out.println(lector.readLine()); // NO_COMPARTIDOS
+                                            System.out.println(lector.readLine());
                                         }
                                     }
                                 }
                                 break;
+
 
                             case "12":
                                 escritor.println("12");
