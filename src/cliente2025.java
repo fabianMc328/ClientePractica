@@ -6,7 +6,6 @@ public class cliente2025 {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-
         boolean salir = false;
 
         while (!salir) {
@@ -79,15 +78,12 @@ public class cliente2025 {
                             } else if ("2".equals(subopcion)) {
                                 volverAlMenu = true;
                                 volverIntentar = false;
-
                             } else {
                                 System.out.println("Opción no válida.");
                             }
                         }
                         salida.close();
-                        if (volverAlMenu) {
-                            break;
-                        }
+                        if (volverAlMenu) break;
                         continue;
                     }
 
@@ -98,7 +94,6 @@ public class cliente2025 {
                     }
 
                     System.out.println(respuesta);
-
 
                     String linea;
                     while ((linea = lector.readLine()) != null) {
@@ -118,6 +113,8 @@ public class cliente2025 {
                         System.out.println("7. Eliminar mi cuenta ");
                         System.out.println("8. Bloquear usuario");
                         System.out.println("9. Desbloquear usuario");
+                        System.out.println("10. Solicitar ver archivos de otro usuario");
+                        System.out.println("11. Leer solicitudes de archivos");
                         System.out.print("Elige una opción: ");
                         String accion = scanner.nextLine();
                         escritor.println(accion);
@@ -131,18 +128,14 @@ public class cliente2025 {
 
                             case "2":
                                 System.out.println(lector.readLine());
-
                                 while (true) {
                                     System.out.print("Tu intento: ");
                                     String intento = scanner.nextLine();
                                     escritor.println(intento);
-
-                                    String respuestaServidor = lector.readLine();
-                                    System.out.println(respuestaServidor);
-
-
-                                    if (respuestaServidor.contains("🎉") || respuestaServidor.contains("😢")) {
-                                        lector.readLine();
+                                    String respServidor = lector.readLine();
+                                    System.out.println(respServidor);
+                                    if (respServidor.contains("🎉") || respServidor.contains("😢")) {
+                                        lector.readLine(); // FIN_JUEGO
                                         break;
                                     }
                                 }
@@ -152,10 +145,12 @@ public class cliente2025 {
                                 System.out.print("Destinatario: ");
                                 String destinatario = scanner.nextLine();
                                 escritor.println(destinatario);
-
-                                String respDestinatario = lector.readLine();
-                                if ("NO_USUARIO".equals(respDestinatario)) {
+                                String respDest = lector.readLine();
+                                if ("NO_USUARIO".equals(respDest)) {
                                     System.out.println("Usuario no registrado, no se puede enviar mensajes.");
+                                    break;
+                                } else if ("USUARIO_BLOQUEADO".equals(respDest)) {
+                                    System.out.println("No puedes enviar mensajes a este usuario, estás bloqueado.");
                                     break;
                                 }
 
@@ -172,32 +167,22 @@ public class cliente2025 {
                                 System.out.print("Elige una opción: ");
                                 String tipoInput = scanner.nextLine();
                                 String tipo;
-
-                                if (tipoInput.equals("1")) {
-                                    tipo = "recibido";
-                                } else if (tipoInput.equals("2")) {
-                                    tipo = "enviado";
-                                } else {
-                                    System.out.println("Opción no válida para tipo de mensajes.");
-                                    lector.readLine();
-                                    break;
-                                }
-
+                                if ("1".equals(tipoInput)) tipo = "recibido";
+                                else if ("2".equals(tipoInput)) tipo = "enviado";
+                                else { System.out.println("Opción no válida"); lector.readLine(); break; }
                                 escritor.println(tipo);
 
-                                String mensajeServidor = lector.readLine();
-                                if ("NO_HAY_MENSAJES".equals(mensajeServidor)) {
-                                    System.out.println("No tienes mensajes " + tipo + " para eliminar.");
+                                String mensajesServidor = lector.readLine();
+                                if ("NO_HAY_MENSAJES".equals(mensajesServidor)) {
+                                    System.out.println("No hay mensajes " + tipo);
                                     break;
                                 }
 
                                 System.out.println("Tus mensajes:");
-                                System.out.println(mensajeServidor);
-                                while (!(linea = lector.readLine()).equals("FIN_LISTA")) {
-                                    System.out.println(linea);
-                                }
+                                System.out.println(mensajesServidor);
+                                while (!(linea = lector.readLine()).equals("FIN_LISTA")) System.out.println(linea);
 
-                                System.out.print("Elige el número del mensaje a eliminar: ");
+                                System.out.print("Número de mensaje a eliminar: ");
                                 String numEliminar = scanner.nextLine();
                                 escritor.println(numEliminar);
                                 System.out.println(lector.readLine());
@@ -209,67 +194,74 @@ public class cliente2025 {
                                     System.out.println("No tienes mensajes recibidos.");
                                     break;
                                 }
-
                                 boolean leyendo = true;
                                 while (leyendo) {
                                     String lineaMensaje = lector.readLine();
-
                                     if ("FIN_LISTA".equals(lineaMensaje)) {
                                         leyendo = false;
                                         break;
                                     }
-
                                     System.out.println(lineaMensaje);
-
                                     if ("MAS_PAGINAS".equals(lineaMensaje)) {
                                         String pregunta = lector.readLine();
                                         System.out.print(pregunta + " ");
                                         String respuestaa = scanner.nextLine();
                                         escritor.println(respuestaa);
-
-                                        if (!respuestaa.equalsIgnoreCase("siguiente")) {
-                                            leyendo = false;
-                                        }
+                                        if (!respuestaa.equalsIgnoreCase("siguiente")) leyendo = false;
                                     }
-
                                 }
                                 break;
-                            case "7":
-                                System.out.print("¿Estás seguro de eliminar tu cuenta? (si/no): ");
-                                String confirmar = scanner.nextLine().trim().toLowerCase();
-                                if (confirmar.equals("si")) {
-                                    escritor.println(confirmar);
-                                    String respuestaServidor = lector.readLine();
-                                    if ("ELIMINADO_OK".equals(respuestaServidor)) {
-                                        System.out.println("✅ Tu cuenta fue eliminada. Regresando al menú principal...");
-                                        sesionActiva = false;
-                                    } else if ("ELIMINADO_ERROR".equals(respuestaServidor)) {
-                                        System.out.println(" Error al eliminar tu cuenta.");
-                                    }
-                                } else {
-                                    escritor.println(confirmar);
-                                    lector.readLine();
-                                    System.out.println("Operación cancelada. Volviendo al menú cliente.");
-                                }
-                                break;
-
 
                             case "6":
                                 sesionActiva = false;
                                 break;
+
+                            case "7":
+                                System.out.print("¿Estás seguro de eliminar tu cuenta? (si/no): ");
+                                String confirmar = scanner.nextLine().trim().toLowerCase();
+                                escritor.println(confirmar);
+                                String respServidor = lector.readLine();
+                                if ("ELIMINADO_OK".equals(respServidor)) {
+                                    System.out.println("✅ Tu cuenta fue eliminada. Regresando al menú principal...");
+                                    sesionActiva = false;
+                                } else if ("ELIMINADO_ERROR".equals(respServidor)) {
+                                    System.out.println("Error al eliminar tu cuenta.");
+                                } else {
+                                    System.out.println("Operación cancelada.");
+                                }
+                                break;
+
                             case "8":
-                                System.out.print("Ingrese el usuario que desea bloquear: ");
+                                System.out.print("Ingrese usuario a bloquear: ");
                                 String bloquear = scanner.nextLine();
                                 escritor.println(bloquear);
                                 System.out.println(lector.readLine());
                                 break;
 
                             case "9":
-                                System.out.print("Ingrese el usuario que desea desbloquear: ");
+                                System.out.print("Ingrese usuario a desbloquear: ");
                                 String desbloquear = scanner.nextLine();
                                 escritor.println(desbloquear);
                                 System.out.println(lector.readLine());
                                 break;
+
+                            case "10":
+                                System.out.print("Ingrese el usuario al que desea solicitar ver archivos: ");
+                                String objetivo = scanner.nextLine();
+                                escritor.println(objetivo);
+                                System.out.println(lector.readLine());
+                                break;
+
+                            case "11":
+                                String respSolicitud;
+                                while (!(respSolicitud = lector.readLine()).equals("FIN_SOLICITUDES")) {
+                                    System.out.println(respSolicitud);
+                                    String decision = scanner.nextLine();
+                                    escritor.println(decision);
+                                    System.out.println(lector.readLine());
+                                }
+                                break;
+
                             default:
                                 System.out.println("Opción no válida.");
                                 lector.readLine();
@@ -282,29 +274,9 @@ public class cliente2025 {
 
             } else {
                 System.out.println("Opción no válida.");
-
             }
         }
 
         scanner.close();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
