@@ -246,67 +246,58 @@ public class cliente2025 {
                                 System.out.println(lector.readLine());
                                 break;
 
+
                             case "10":
                                 System.out.print("Ingrese el usuario al que desea solicitar ver archivos: ");
                                 String objetivo = scanner.nextLine();
                                 escritor.println(objetivo);
-
-                                String resp10 = lector.readLine();
-                                System.out.println(resp10);
+                                System.out.println(lector.readLine());
                                 break;
 
                             case "11":
-                                String resp11;
-                                resp11 = lector.readLine();
-                                if ("No tienes solicitudes pendientes.".equals(resp11)) {
-                                    System.out.println(resp11);
-                                    break;
-                                }
+                                String resp11 = lector.readLine();
+                                if ("SOLICITUD_ARCHIVOS".equals(resp11)) {
+                                    String usuarioSolicitante = lector.readLine();
+                                    System.out.println("El usuario '" + usuarioSolicitante + "' quiere ver tus archivos de texto (*.txt). ¿Aceptas? (si/no)");
+                                    String decision = scanner.nextLine();
+                                    escritor.println(decision);
 
-                                while (!"FIN_SOLICITUDES".equals(resp11)) {
-                                    if ("SOLICITUD_ARCHIVOS".equals(resp11)) {
-                                        String usuarioSolicitante = lector.readLine();
-                                        System.out.println("El usuario '" + usuarioSolicitante + "' quiere ver tus archivos. ¿Deseas compartirlos? (si/no)");
-                                        String decision = scanner.nextLine();
-                                        escritor.println(decision);
-
-                                        if ("si".equalsIgnoreCase(decision)) {
-                                            String mensajeServidor = lector.readLine();
-                                            if ("PEDIR_LISTA_ARCHIVOS".equals(mensajeServidor)) {
-                                                File directorio = new File(".");
-                                                File[] archivos = directorio.listFiles();
-                                                if (archivos != null) {
-                                                    for (File f : archivos) {
-                                                        if (f.isFile()) {
-                                                            escritor.println(f.getName());
-                                                        }
-                                                    }
+                                    if ("si".equalsIgnoreCase(decision)) {
+                                        String serverMsg = lector.readLine();
+                                        if("PEDIR_LISTA_ARCHIVOS".equals(serverMsg)){
+                                            File directorio = new File(".");
+                                            File[] archivos = directorio.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
+                                            if (archivos != null) {
+                                                for (File f : archivos) {
+                                                    escritor.println(f.getName());
                                                 }
-                                                escritor.println("FIN_LISTA_ARCHIVOS");
                                             }
-                                            System.out.println(lector.readLine());
-                                        } else {
-                                            System.out.println(lector.readLine());
+                                            escritor.println("FIN_LISTA_ARCHIVOS");
                                         }
                                     }
-                                    resp11 = lector.readLine();
+
+                                    System.out.println(lector.readLine());
+                                    lector.readLine();
+                                } else {
+
+                                    System.out.println(resp11);
+                                    lector.readLine();
                                 }
                                 break;
-
-
 
                             case "12":
-                                escritor.println("12");
                                 String resp12 = lector.readLine();
-                                if ("No tienes archivos compartidos.".equals(resp12)) {
-                                    System.out.println(resp12);
-                                } else {
-                                    while (!"FIN_LISTA_ARCHIVOS".equals(resp12)) {
-                                        System.out.println(resp12);
-                                        resp12 = lector.readLine();
+                                System.out.println(resp12);
+                                if (!"No tienes archivos compartidos para ver.".equals(resp12)) {
+
+                                    while (!(linea = lector.readLine()).equals("FIN_LISTA_ARCHIVOS")) {
+                                        System.out.println("- " + linea);
                                     }
+                                } else {
+                                    lector.readLine();
                                 }
                                 break;
+
 
 
                             default:
