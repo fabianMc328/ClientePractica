@@ -264,37 +264,71 @@ public class cliente2025 {
 
                                     if ("si".equalsIgnoreCase(decision)) {
                                         String serverMsg = lector.readLine();
-                                        if("PEDIR_LISTA_ARCHIVOS".equals(serverMsg)){
+                                        if("PEDIR_LISTA_Y_CONTENIDO".equals(serverMsg)){
+                                            System.out.println("Enviando archivos .txt al servidor...");
                                             File directorio = new File(".");
                                             File[] archivos = directorio.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
                                             if (archivos != null) {
                                                 for (File f : archivos) {
-                                                    escritor.println(f.getName());
+                                                    try (BufferedReader fileReader = new BufferedReader(new FileReader(f))) {
+                                                        escritor.println(f.getName());
+                                                        String lineaArchivo;
+                                                        while ((lineaArchivo = fileReader.readLine()) != null) {
+                                                            escritor.println(lineaArchivo);
+                                                        }
+                                                        escritor.println("_ENDFILE_");
+                                                    } catch (IOException e) {
+                                                        System.out.println("No se pudo leer el archivo: " + f.getName());
+                                                    }
                                                 }
                                             }
-                                            escritor.println("FIN_LISTA_ARCHIVOS");
+                                            escritor.println("_END_ALL_FILES_");
                                         }
                                     }
-
                                     System.out.println(lector.readLine());
                                     lector.readLine();
                                 } else {
-
                                     System.out.println(resp11);
                                     lector.readLine();
                                 }
                                 break;
 
                             case "12":
-                                String resp12 = lector.readLine();
-                                System.out.println(resp12);
-                                if (!"No tienes archivos compartidos para ver.".equals(resp12)) {
+                                String encabezado = lector.readLine();
+                                System.out.println(encabezado);
 
-                                    while (!(linea = lector.readLine()).equals("FIN_LISTA_ARCHIVOS")) {
-                                        System.out.println("- " + linea);
+                                if ("No tienes archivos compartidos para ver.".equals(encabezado)) {
+                                    break;
+                                }
+
+
+                                while (!(linea = lector.readLine()).equals("FIN_LISTA_ARCHIVOS")) {
+                                    System.out.println("- " + linea);
+                                }
+
+
+                                System.out.print("\n¿Deseas copiar algún archivo a tu proyecto? (si/no): ");
+                                String quiereCopiar = scanner.nextLine();
+
+                                if ("si".equalsIgnoreCase(quiereCopiar)) {
+                                    System.out.print("Escribe el nombre exacto del archivo que quieres copiar: ");
+                                    String archivoACopiar = scanner.nextLine();
+
+                                    escritor.println("_REQUEST_COPY_");
+                                    escritor.println(archivoACopiar);
+
+
+                                    System.out.println("📥 Recibiendo archivo...");
+                                    try (PrintWriter fileWriter = new PrintWriter(new FileWriter("copia_de_" + archivoACopiar))) {
+                                        while (!(linea = lector.readLine()).equals("_ENDFILE_")) {
+                                            fileWriter.println(linea);
+                                        }
+                                        System.out.println("✅ Archivo guardado como 'copia_de_" + archivoACopiar + "'");
+                                    } catch (IOException e) {
+                                        System.out.println("❌ Error al guardar el archivo.");
                                     }
                                 } else {
-                                    lector.readLine();
+                                    escritor.println("_NO_COPY_");
                                 }
                                 break;
 
